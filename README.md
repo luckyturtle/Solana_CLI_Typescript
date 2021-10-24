@@ -1,4 +1,78 @@
-# CANDY MACHINE
+# SOLANA CLI NFT TOOL
+This tool is customized for the metaplex cli scripts.
+Added the update feature of Metadata for minted NFT.
+
+## Prepare
+Please follow the candy-machine-cli installation guide.
+
+## Usage
+
+### CreateMint
+```
+solana-keygen new --outfile C:\devnet.json
+
+solana-keygen verify {Wallet Pubkey} C:\devnet.json
+
+solana config set --keypair C:\devnet.json --url devnet
+
+solana airdrop 5
+
+npm i -g ts-node
+
+solana-keygen pubkey
+```
+
+Open the assets file and edit the creator info of token collection.
+```
+"properties": {
+    "files": [
+      {
+        "uri": "0.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image",
+    "creators": [
+        {
+            "address": "51QHr8aS4En232fPCWUYLxWYw4crwxeap56n4jF1283Y",
+            "share": 100
+        }
+    ]
+  },
+```
+Change the address of creators to the wallet publicKey which will mint the NFT.
+
+```
+ts-node .\src\candy-machine-cli.ts upload .\assets -n 1 -k c:\devnet.json
+
+ts-node .\src\candy-machine-cli.ts verify -k c:\devnet.json
+
+ts-node .\src\cli-nft.ts createNFT -m {UPLOADED ARWEAVE URL} -k c:\devnet.json
+```
+
+### Update
+
+`{Uploaded Arweave Url}`: this is the Metadata URL that is already uploaded to Arweave.
+
+`{NFT Address}`: your NFT Address you are going to update its metadata
+
+```
+ts-node .\src\cli-nft.ts updateNFTMetadata -m {Uploaded Arweave Url} -n {NFT Address} -k c:\devnet.json
+```
+`Note: The creator of the new Arweave Metadata Resource is ignored and you become the only creator for the NFT.`
+
+
+## Useful Resources
+
+https://github.com/metaplex-foundation/metaplex/tree/master/js/packages/cli
+
+https://github.com/metaplex-foundation/metaplex/blob/9d5a5c6d668cd9c597cff8c63dfba00dee2f72f0/js/packages/common/src/actions/metadata.ts#L481
+
+https://github.com/metaplex-foundation/metaplex/blob/dec42c2c854f0698757228e5b2728865437f7390/rust/token-metadata/program/src/instruction.rs#L58
+
+https://explorer.solana.com/
+
+## Tutorial Video
 
 https://user-images.githubusercontent.com/81876372/133098938-dc2c91a6-1280-4ee1-bf0e-db0ccc972ff7.mp4
 
